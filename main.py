@@ -7,10 +7,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 conn = MySQLdb.connect(
-    user='admin',
-    passwd='WW8knRF8DaaU',
-    host='cohabi-dev-db.cd8txehbs59f.ap-northeast-1.rds.amazonaws.com',
-    db='cohabi_development')
+    user='XXX',
+    passwd='XXX',
+    host='XXX',
+    db='XXX')
 
 app = FastAPI()
 
