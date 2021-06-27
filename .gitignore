@@ -1,1 +1,7 @@
-secret.json
+# 鍵情報などを格納しているディレクトリ
+key
+
+# pythonのキャッシュ情報
+__pycache__
+
+.DS_Store
