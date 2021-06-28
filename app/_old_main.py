@@ -4,13 +4,19 @@ from pydantic import BaseModel
 import MySQLdb
 from uuid import uuid4
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
+with open('./key/secret.json') as f:
+    acskey = json.load(f)
 
-conn = MySQLdb.connect(
-    user='XXX',
-    passwd='XXX',
-    host='XXX',
-    db='XXX')
+db_acs = acskey['database']
+print(db_acs)
+
+# conn = MySQLdb.connect(
+#     user=db_acs["user"],
+#     passwd=db_acs["passwd"],
+#     host=db_acs["host"],
+#     db=db_acs["db"])
 
 app = FastAPI()
 
@@ -28,7 +34,6 @@ allow_credentials=True,
 allow_methods=["*"],
   リクエストのメソッドは何でも良い
   optionsは必ず入れなきゃいけない(ただしこのケースに限る)
-
 """
 
 app.add_middleware(
@@ -39,6 +44,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/test")
+def get_helloworld():
+    print("test")
+    mes = {"mes": "helloworld"}
+    return mes
 
 @app.get("/helloworld")
 def read_root():
