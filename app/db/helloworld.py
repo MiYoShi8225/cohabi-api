@@ -1,12 +1,12 @@
 from typing import List
 from app.model.user import User
-from MySQLdb.cursors import Cursor
+from app.db import db_session
 
-def get_helloworlds(cur: Cursor) -> List[User]:
+def get_helloworld() -> List[User]:
 
-    sql = "select id, name from user"
-    cur.execute(sql)
-    rows = cur.fetchall()
+    sql = "select id, name from {}".format(db_session.table_name)
+    db_session.cur.execute(sql)
+    rows = db_session.cur.fetchall()
     print('rowsa: {}'.format(rows))
 
     users:List[User] = []
@@ -18,15 +18,13 @@ def get_helloworlds(cur: Cursor) -> List[User]:
     
     return users
 
-    
-    # db_connection.conn.commit()
 
-def post_helloworlds(cur:Cursor, user: User):
-    insert_sql = "insert into user (id, name) VALUES (%s, %s);"
+def create_helloworld(user: User):
+    insert_sql = "insert into {} (id, name) VALUES (%s, %s);".format(db_session.table_name)
     
     print('{} \n{}'.format(user.id, user.name))
 
-    log1 = cur.execute(insert_sql, (user.id, user.name, ))
+    log1 = db_session.cur.execute(insert_sql, (user.id, user.name, ))
 
     print(log1)
 

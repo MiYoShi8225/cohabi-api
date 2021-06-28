@@ -27,6 +27,9 @@
 - mysql のコネクションについて
   - https://qiita.com/hoto17296/items/fb1b7304128f4c90af69
 
+- mysqlclinetのconectについて
+  - https://qiita.com/momomo_rimoto/items/9da8b3f76d9542defd9a
+
 ## directory info
 
 - この repository のディレクトリ構成
@@ -60,7 +63,7 @@
           |- groups.py
       |- db/
           |- __init__.py
-          |- db_connection.py *** dbとのコネクションを行う
+          |- db_session.py *** dbとのsession(接続)を行う
           |- costs.py
           |- todos.py
           |- calendars.py
@@ -75,6 +78,7 @@
   ```
 
   - 参考 URL:
+    - https://qiita.com/t-iguchi/items/d01b24fed05db43fd0b8#dbpy
     - https://note.com/yusugomori/n/n9f2c0422dfcd
     - https://nmomos.com/tips/2021/01/23/fastapi-docker-1/
 

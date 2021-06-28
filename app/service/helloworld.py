@@ -1,26 +1,23 @@
 from app.model.user import User
-from app.db import db_connection, helloworld
+from app.db import db_session, helloworld
 
 
-def get_helloworlds():
-    cur = db_connection.conn.cursor()
-    users = helloworld.get_helloworlds(cur)
+def get_helloworld():
+    db_session.start_cur()
+    users = helloworld.get_helloworld()
     print('rows: {}'.format(users))
 
     user_names = []
     for user in users:
         user_names.append(user.name)
 
-    cur.close()
+    db_session.end_cur()
 
     return user_names
 
-    
-    # db_connection.conn.commit()
-
-def post_helloworld(name):
+def create_helloworld(name):
     from uuid import uuid4
-    cur = db_connection.conn.cursor()
+    db_session.start_cur()
     print('item: {}'.format(name))
     id_code = uuid4()
 
@@ -29,7 +26,7 @@ def post_helloworld(name):
     user.id = id_code
     user.name = name
 
-    helloworld.post_helloworlds(cur, user)
+    helloworld.create_helloworld(user)
 
-    cur.close()
-    db_connection.conn.commit()
+    db_session.end_cur()
+    db_session.conn.commit()

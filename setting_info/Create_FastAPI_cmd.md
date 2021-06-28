@@ -14,12 +14,12 @@ ASGI実行(Application Server Gateway Interface)
 # uvicorn main:app --reload
 
 ルートディレクトリにmain.pyがない場合
-# uvicorn appProc.main:app --reload
+# uvicorn app.main:app --reload
 参考URL
 https://qiita.com/yoshi0518/items/52914cd1211eff4b93d0
 
 ↓本番実施時
-# uvicorn appProc.main:app
+# uvicorn app.main:app
 ```
 
 ## MySQLへのCRUDを行うために必要な物
