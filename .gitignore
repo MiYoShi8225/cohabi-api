@@ -4,4 +4,8 @@ key
 # pythonのキャッシュ情報
 __pycache__
 
+# ごみ
 .DS_Store
+
+#localテスト環境のフォルダ
+test_env

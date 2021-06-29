@@ -1,11 +1,10 @@
 import MySQLdb
-import json
-
 from MySQLdb.connections import Connection
 from MySQLdb.cursors import Cursor
 
-with open('./key/secret.json') as f:
-    acskey = json.load(f)
+from app.util import switcher
+
+acskey = switcher.db_switch()
 
 db_acs = acskey['database']
 
@@ -20,16 +19,12 @@ def start_conn():
     global conn
     print('start connection')
     
-    # with open('./key/secret.json') as f:
-    #     acskey = json.load(f)
-
-    # db_acs = acskey['database']
-
     conn = MySQLdb.connect(
         user=db_acs["user"],
         passwd=db_acs["passwd"],
         host=db_acs["host"],
-        db=db_acs["db"]
+        db=db_acs["db"],
+        connect_timeout=10
     )
     
     print(conn)

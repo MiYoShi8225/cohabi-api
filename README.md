@@ -1,5 +1,9 @@
 # cohabi-api
 
+## 実行方法
+- /ディレクトにあるapp.pyを実行する
+  - 引数に環境名であるdev(開発)/stg(ステージング)/prd(本番)を指定する。
+
 ## setting info
 
 - fastAPI 公式ドキュメント
@@ -25,16 +29,24 @@
   - https://kk-river108.hatenablog.com/entry/2019/03/10/163457
 
 - mysql のコネクションについて
+
   - https://qiita.com/hoto17296/items/fb1b7304128f4c90af69
 
-- mysqlclinetのconectについて
+- mysqlclinet の conect について
+
   - https://qiita.com/momomo_rimoto/items/9da8b3f76d9542defd9a
+
+- logging
+  - https://docs.python.org/ja/3/howto/logging.html
+  - https://develop.blue/2020/02/python-use-logging/
+  - https://qiita.com/FukuharaYohei/items/92795107032c8c0bfd19
 
 ## directory info
 
 - この repository のディレクトリ構成
 
   ```txt
+  app.py *** uvicornの実行を行う
   |- .gitignore
   |- README.md *** gitのreadme
   |- setting_md/
@@ -70,10 +82,19 @@
           |- categories.py
           |- me.py
           |- groups.py
+      |- util
+          |- logger.py *** loggingのラッパー
+          |- switcher.py *** 環境別の実行を制御する
   |- key/ *** key情報を保管(そのためgitignoreに記載して管理)
-      |- secret_info.json *** dbセッション情報などを格納
+      |- dev/
+          |- secret_info.json *** dbセッション情報などを格納
+      |- stg/
+      |- prd
   |- logs/
-      |-
+      |- dev/
+      |- stg/
+      |- prd/
+  |- script/ *** script系を格納する
   |- docker/ *** いつか作られるはず・・・(2021/6/27現在なし)
   ```
 
