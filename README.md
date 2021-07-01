@@ -13,6 +13,10 @@
 - この repository を動作させる上で行った設定や cmd 郡
   - ./setting_info/を確認
 
+- FastAPIのdockerについて
+  - https://fastapi.tiangolo.com/ja/deployment/docker/
+  - https://qiita.com/FN_Programming/items/2dcabc93365a62397afe
+
 ## codeing 方法
 
 - init 情報についての参考 URL
@@ -31,6 +35,12 @@
 - mysql のコネクションについて
 
   - https://qiita.com/hoto17296/items/fb1b7304128f4c90af69
+
+  - cursorを使うことで複数のトランザクションを扱うことができるらしい！
+    - https://qiita.com/ta_ta_ta_miya/items/b95c7a2e5e32545c8adc
+
+  - tryとfinallyを使って必ずcursorを閉じるようにするのが望ましい！！
+    - https://qiita.com/umezawatakeshi/items/6c3483ea0e082f2d8926
 
 - mysqlclinet の conect について
 
@@ -82,14 +92,15 @@
           |- categories.py
           |- me.py
           |- groups.py
-      |- util
+      |- util/
           |- logger.py *** loggingのラッパー
           |- switcher.py *** 環境別の実行を制御する
+          |- common.py *** 共通で扱うものを制御する
   |- key/ *** key情報を保管(そのためgitignoreに記載して管理)
       |- dev/
           |- secret_info.json *** dbセッション情報などを格納
       |- stg/
-      |- prd
+      |- prd/
   |- logs/
       |- dev/
       |- stg/

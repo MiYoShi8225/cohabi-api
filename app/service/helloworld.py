@@ -1,6 +1,8 @@
+# 自作ライブラリー
 from app.model.user import User
 from app.db import db_session, helloworld
-
+from app.util import logger, switcher, common
+switcher.logger(common.FileName(__file__))
 
 def get_helloworld():
     db_session.start_cur()

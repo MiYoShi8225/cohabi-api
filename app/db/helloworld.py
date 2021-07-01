@@ -1,9 +1,13 @@
 from typing import List
+
+# 自作ライブラリー
 from app.model.user import User
 from app.db import db_session
+from app.util import logger, switcher, common
+switcher.logger(common.FileName(__file__))
 
 def get_helloworld() -> List[User]:
-
+    
     sql = "select id, name from {}".format(db_session.table_name)
     db_session.cur.execute(sql)
     rows = db_session.cur.fetchall()

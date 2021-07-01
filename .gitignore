@@ -1,11 +1,14 @@
 # 鍵情報などを格納しているディレクトリ
-key
+key/
 
 # pythonのキャッシュ情報
-__pycache__
+__pycache__/
 
 # ごみ
 .DS_Store
 
 #localテスト環境のフォルダ
 test_env
+
+# log/env配下のlog情報
+logs/dev/*
