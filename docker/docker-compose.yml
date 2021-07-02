@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - .:/backend/
+    command: python ..app.py dev
+    ports:
+      - 8000:8000

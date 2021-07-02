@@ -1,9 +1,12 @@
+# installライブラリー
+from app.util import logger
 from fastapi import APIRouter
-from app.service import helloworld
+from app.service import helloworld as helloworld_service
 from pydantic import BaseModel
 
 router = APIRouter()
 
+# returnする際のクラスを作成
 class ReturnType:
     def __init__(self, body:dict):
         self.result = {
@@ -13,14 +16,10 @@ class ReturnType:
 
         self.body = body
 
-        self.return_body = {
-            'result': self.result,
-            'body': self.body
-        }
-    
+
 @router.get("/helloworld")
 async def get_helloworld():
-    user_names = helloworld.get_helloworld()
+    user_names = helloworld_service.get()
     
     body = {
         'users': user_names
@@ -28,20 +27,22 @@ async def get_helloworld():
 
     return_type = ReturnType(body)
 
-    print(return_type.return_body)
-    return return_type.return_body
+    logger.debug(return_type)
+    return return_type
 
+# input情報の入力値を決定する
 class postUser(BaseModel):
     name: str
 
 @router.post("/helloworld")
 async def create_helloworld(body: postUser):
-    helloworld.create_helloworld(body.name)
+    helloworld_service.create(body.name)
 
+    # TODO: クリエイトしたユーザーを返す
     body = {
         'users': ""
     }
-    return_type = ReturnType(body)
+    result = ReturnType(body)
 
-    print(return_type.return_body)
-    return return_type.return_body
+    logger.debug(result)
+    return result
