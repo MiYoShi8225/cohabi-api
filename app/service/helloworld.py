@@ -1,13 +1,13 @@
 # 自作ライブラリー
+from app.util import logger
 from app.model.user import User
-from app.db import db_session, helloworld
-from app.util import logger, switcher, common
-switcher.logger(common.FileName(__file__))
+from app.db import db_session, helloworld as helloworld_repository
 
-def get_helloworld():
+
+def get():
     db_session.start_cur()
-    users = helloworld.get_helloworld()
-    print('rows: {}'.format(users))
+    users = helloworld_repository.get()
+    logger.debug('rows: {}'.format(users))
 
     user_names = []
     for user in users:
@@ -17,10 +17,10 @@ def get_helloworld():
 
     return user_names
 
-def create_helloworld(name):
+def create(name):
     from uuid import uuid4
     db_session.start_cur()
-    print('item: {}'.format(name))
+    logger.debug('item: {}'.format(name))
     id_code = uuid4()
 
     user = User()
@@ -28,7 +28,7 @@ def create_helloworld(name):
     user.id = id_code
     user.name = name
 
-    helloworld.create_helloworld(user)
-
-    db_session.end_cur()
+    helloworld_repository.create(user)
+    
     db_session.conn.commit()
+    db_session.end_cur()

@@ -1,5 +1,5 @@
 # 鍵情報などを格納しているディレクトリ
-key/
+key/secret.json
 
 # pythonのキャッシュ情報
 __pycache__/
@@ -11,4 +11,4 @@ __pycache__/
 test_env
 
 # log/env配下のlog情報
-logs/dev/*
+logs/*.log

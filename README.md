@@ -63,6 +63,7 @@
       |- anaconda_command.md *** anacondaで使うコマンドを記載(これは三善用)
       |- Create_FastAPI_cmd.md *** fastAPIで使うコマンドを記載
       |- directory.txt *** directory情報を記載
+      |- dev-env_setting_info.md *** 開発環境の作成方法を記載
   |- app/
       |- __init__.py
       |- main.py *** uvicornに実行されるコマンド
@@ -114,4 +115,11 @@
     - https://note.com/yusugomori/n/n9f2c0422dfcd
     - https://nmomos.com/tips/2021/01/23/fastapi-docker-1/
 
-##
+## その他
+- gitignorについて(一応)
+  - https://qiita.com/inabe49/items/16ee3d9d1ce68daa9fff
+
+- docker 環境について
+  - https://tech-lab.sios.jp/archives/19191
+  - https://tech-lab.sios.jp/archives/20051#docker-compose-2
+  - https://nmomos.com/tips/2021/01/23/fastapi-docker-1/#toc_id_4

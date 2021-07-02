@@ -1,31 +1,31 @@
+# 標準ライブラリー
+import json
+
 # installライブラリー
 import MySQLdb
 from MySQLdb.connections import Connection
 from MySQLdb.cursors import Cursor
 
 #自作ライブラリー
-from app.util import switcher
-from app.util import logger, switcher, common
-switcher.logger(common.FileName(__file__))
-
-# dbの情報をswitcherから代入
-acskey = switcher.db_switch()
-
-# dbのアクセス情報を代入
-db_acs = acskey['database']
-
-# 使用するdbのtable名を持ってくる
-table_name = acskey['db_tabele_name']["table1"]
+from app.util import logger
 
 # グローバル変数になるものの型を宣言
 conn: Connection
 cur: Cursor
 
+
 # dbのconnectを作成する
-def start_conn():
+def start_conn(path):
     global conn
-    print('start mysql connection')
+    with open(path) as f:
+        acskey = json.load(f)
     
+    # dbのアクセス情報を代入
+    db_acs = acskey['database']
+
+
+    logger.info('start db connect.')
+
     conn = MySQLdb.connect(
         user=db_acs["user"],
         passwd=db_acs["passwd"],
@@ -34,21 +34,21 @@ def start_conn():
         connect_timeout=10 # connectionにかかる時間は10秒以内に設定
     )
     
-    print(conn)
+    logger.debug(conn)
 
 # dbのconnectを閉じる
 def end_conn():
     conn.close()
-    print(conn)
-    print('end mysql connection')
+    logger.debug(conn)
+    logger.info('end mysql connection')
 
 # dbのcursorを作成する
 def start_cur():
     global cur
     cur = conn.cursor()
-    print(cur)
+    logger.debug(cur)
 
 # dbのcursorを閉じる
 def end_cur():
     cur.close()
-    print(cur)
+    logger.debug(cur)

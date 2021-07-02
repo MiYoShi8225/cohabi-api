@@ -6,8 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # 自作ライブラリー
 from app.db import db_session
 from app.routes import router
-from app.util import logger, switcher, common
-switcher.logger(common.FileName(__file__))
+from app.util import logger
 
 # FastAPIをappに宣言
 app = FastAPI()
@@ -30,11 +29,11 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup():
     # TODO: エラーハンドリング(コネクションがうまく行かなかったらログ吐いてプロセスを落とす)
-    
-    logger.info('start db connect.')
+    logger.format()
+    logger.info('start app.py')
 
     # dbとのconnectionを作成
-    db_session.start_conn()
+    db_session.start_conn('./key/secret.json')
     
 
 # uvicornを終了した際に実行

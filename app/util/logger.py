@@ -2,28 +2,25 @@
 import logging
 from datetime import datetime
 
-# 自作ライブラリー
-from app.util import switcher
+def format():
+    formatter = '[%(levelname)s] %(asctime)s : %(message)s'
+    logging.basicConfig(format=formatter, filename='./logs/{}.log'.format("app"), level=logging.DEBUG)
 
+def printer(msg, error_level):
+    print("[{}] {} : {}".format(error_level, str(datetime.now()).split('.')[0], msg))
 
+def error(msg):
+    logging.error(msg)
+    printer(msg, 'error')
 
-env = switcher.enviroment()
+def warning(msg):
+    logging.warning(msg)
+    printer(msg, 'warning')
 
-def printer(mes, error_level):
-    print("[{}:{}] {} : {}".format(error_level, env, str(datetime.now()).split('.')[0], mes))
+def info(msg):
+    logging.info(msg)
+    printer(msg, 'info')
 
-def error(mes):
-    logging.error(mes)
-    printer(mes, 'error')
-
-def warning(mes):
-    logging.warning(mes)
-    printer(mes, 'warning')
-
-def info(mes):
-    logging.info(mes)
-    printer(mes, 'info')
-
-def debug(mes):
-    logging.debug(mes)
-    printer(mes, 'debug')
+def debug(msg):
+    logging.debug(msg)
+    printer(msg, 'debug')
