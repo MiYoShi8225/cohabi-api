@@ -13,6 +13,7 @@ app = FastAPI()
 
 # originに接続元を許可するURLを記載
 origins = [
+    # TODO: 環境変数から取るようにしたい。環境ごとに許可する対象が代わり共存したくないため。
     "https://cohabi-staging.runemosuky.com"
 ]
 
