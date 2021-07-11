@@ -40,4 +40,10 @@ cohabi-api > alembic revision -m "some operation name"
 - 作成されたファイルに加える変更内容をスクラッチで書いて、マイグレーションの実行を行う
   - sqlalchemy と連携することで auto generate できるらしいけど、ORM 使わないので無視
 - 基本的に一度マイグレーション投げたら変更しない
+
   - 変更する場合は、一度ダウングレードしてからファイルを変更し、再度マイグレーションを行う
+
+    ```shell
+    # 一個前の状態に戻す
+    cohabi-api > alembic downgrade -1
+    ```
