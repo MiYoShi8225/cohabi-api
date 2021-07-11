@@ -28,6 +28,8 @@ $ > pip install alembic
 cohabi-api > alembic upgrade head
 ```
 
+- db に`alembic_version`というメタテーブルができます
+
 ### DB に変更を加える場合
 
 ```shell
