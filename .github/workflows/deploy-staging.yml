@@ -41,10 +41,10 @@ jobs:
       - name: Generate secret.json for API
         run: |
           cat key/secret.tmpl.json |
-            sed -e "s%{OVERWRITE_USER}%${{ env.STG_DB_USER }}%g" |
-            sed -e "s%{OVERWRITE_PASSWD}%${{ env.STG_DB_PASSWORD }}%g" |
+            sed -e "s%{OVERWRITE_USER}%${{ secrets.STG_DB_USER }}%g" |
+            sed -e "s%{OVERWRITE_PASSWD}%${{ secrets.STG_DB_PASSWORD }}%g" |
             sed -e "s%{OVERWRITE_HOST}%${{ secrets.STG_DB_HOST }}%g" |
-            sed -e "s%{OVERWRITE_DB}%${{ secrets.STG_MYSQL_PASSWORD }}%g" > key/secret.json
+            sed -e "s%{OVERWRITE_DB}%${{ secrets.STG_DB_DATABASE }}%g" > key/secret.json
           cat key/secret.json
 
       - name: "Build image"
@@ -52,7 +52,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.github-sha-short.outputs.sha-short }}
         run: |
-          docker build -f docker/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/Dockerfile .
           echo "::set-output name=ecr-push-tag::$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: "Push image to Amazon ECR"
