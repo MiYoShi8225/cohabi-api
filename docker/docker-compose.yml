@@ -1,11 +1,10 @@
-version: '3.7'
+version: "3.7"
 services:
   server:
     build:
-      context: .
-      dockerfile: dockerfile
-    volumes:
-      - .:/backend/
-    command: python ..app.py dev
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: |
+      uvicorn app.main:app --host 0.0.0.0 --port 8000
     ports:
       - 8000:8000
