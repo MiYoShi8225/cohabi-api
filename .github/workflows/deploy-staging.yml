@@ -54,6 +54,7 @@ jobs:
         run: |
           pwd
           ls
+          cat docker/Dockerfile
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/Dockerfile .
           echo "::set-output name=ecr-push-tag::$ECR_REPOSITORY:$IMAGE_TAG"
 
