@@ -1,4 +1,5 @@
-# cohabi-appの開発環境作成について
+# cohabi-app の開発環境作成について
+
 ```sh
 アナコンダを使用した場合のpython環境の作成
 # conda create -n cohabi-api python=3.8
@@ -15,5 +16,7 @@ ASGI用のモジュール
 mySQLのクライアントモジュール
 # pip install mysqlclient
 
+jwtモジュール
+# pip install python-jose
 
 ```

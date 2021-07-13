@@ -13,17 +13,19 @@ app = FastAPI()
 
 # originに接続元を許可するURLを記載
 origins = [
-    "https://cohabi.runemosuky.com"
+    # TODO: 環境変数から取るようにしたい。環境ごとに許可する対象が代わり共存したくないため。
+    "https://cohabi-staging.runemosuky.com"
 ]
 
 # 接続の許可設定
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins, # originsから来たやつを許可している
+    allow_origins=origins,  # originsから来たやつを許可している
     allow_credentials=True,
-    allow_methods=["*"], # リクエストのメソッドは何でも良い
+    allow_methods=["*"],  # リクエストのメソッドは何でも良い
     allow_headers=["*"],
 )
+
 
 # uvicornから起動した際実行
 @app.on_event("startup")
@@ -34,7 +36,7 @@ async def startup():
 
     # dbとのconnectionを作成
     db_session.start_conn('./key/secret.json')
-    
+
 
 # uvicornを終了した際に実行
 @app.on_event("shutdown")

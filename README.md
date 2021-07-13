@@ -1,8 +1,9 @@
 # cohabi-api
 
 ## 実行方法
-- /ディレクトにあるapp.pyを実行する
-  - 引数に環境名であるdev(開発)/stg(ステージング)/prd(本番)を指定する。
+
+- /ディレクトにある app.py を実行する
+  - 引数に環境名である dev(開発)/stg(ステージング)/prd(本番)を指定する。
 
 ## setting info
 
@@ -11,11 +12,18 @@
   - https://fastapi.tiangolo.com/ja/
 
 - この repository を動作させる上で行った設定や cmd 郡
+
   - ./setting_info/を確認
 
-- FastAPIのdockerについて
+- FastAPI の docker について
   - https://fastapi.tiangolo.com/ja/deployment/docker/
   - https://qiita.com/FN_Programming/items/2dcabc93365a62397afe
+
+## 認証
+
+- 開発時、一時的に認証機構をオフにする場合は、app.auth.authorizer.py の`DISABLE_AUTH`を`True`にしてください
+  - 戻り値の AuthResult.user が`testuser01`になります。
+- git へのプッシュ時は必ず`False`に戻してください。
 
 ## codeing 方法
 
@@ -36,10 +44,11 @@
 
   - https://qiita.com/hoto17296/items/fb1b7304128f4c90af69
 
-  - cursorを使うことで複数のトランザクションを扱うことができるらしい！
+  - cursor を使うことで複数のトランザクションを扱うことができるらしい！
+
     - https://qiita.com/ta_ta_ta_miya/items/b95c7a2e5e32545c8adc
 
-  - tryとfinallyを使って必ずcursorを閉じるようにするのが望ましい！！
+  - try と finally を使って必ず cursor を閉じるようにするのが望ましい！！
     - https://qiita.com/umezawatakeshi/items/6c3483ea0e082f2d8926
 
 - mysqlclinet の conect について
@@ -116,7 +125,9 @@
     - https://nmomos.com/tips/2021/01/23/fastapi-docker-1/
 
 ## その他
-- gitignorについて(一応)
+
+- gitignor について(一応)
+
   - https://qiita.com/inabe49/items/16ee3d9d1ce68daa9fff
 
 - docker 環境について
