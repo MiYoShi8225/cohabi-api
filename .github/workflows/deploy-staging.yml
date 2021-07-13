@@ -52,6 +52,8 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.github-sha-short.outputs.sha-short }}
         run: |
+          pwd
+          ls
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/Dockerfile .
           echo "::set-output name=ecr-push-tag::$ECR_REPOSITORY:$IMAGE_TAG"
 
