@@ -1,0 +1,75 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy Staging
+
+on:
+  push:
+    branches:
+      - feature/ci-docker-image-to-ecr
+
+env:
+  ENV_NAME: staging
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+  ECR_REPOSITORY: cohabi-staging
+
+jobs:
+  publish-image:
+    runs-on: ubuntu-latest
+    outputs:
+      sha-short: ${{ steps.github-sha-short.outputs.sha-short }}
+      docker-image-tag: ${{ steps.build-image.outputs.ecr-push-tag }}
+    steps:
+      - uses: actions/checkout@v2
+
+      # コミットハッシュの先頭7文字をバージョニングに使用します
+      - name: Set short sha
+        id: github-sha-short
+        run: echo "::set-output name=sha-short::$(git rev-parse --short HEAD)"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "ap-northeast-1"
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # key/secret.tmpl.jsonを、key/secret.jsonに出力します
+      - name: Generate secret.json for API
+        run: |
+          cat key/secret.tmpl.json |
+            sed -e "s%{OVERWRITE_USER}%${{ env.STG_DB_USER }}%g" |
+            sed -e "s%{OVERWRITE_PASSWD}%${{ env.STG_DB_PASSWORD }}%g" |
+            sed -e "s%{OVERWRITE_HOST}%${{ secrets.STG_DB_HOST }}%g" |
+            sed -e "s%{OVERWRITE_DB}%${{ secrets.STG_MYSQL_PASSWORD }}%g" > key/secret.json
+          cat key/secret.json
+
+      - name: "Build image"
+        id: build-image
+        env:
+          IMAGE_TAG: ${{ steps.github-sha-short.outputs.sha-short }}
+        run: |
+          docker build -f docker/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          echo "::set-output name=ecr-push-tag::$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: "Push image to Amazon ECR"
+        run: docker push ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
+
+  # slack-workflow-status:
+  #   if: always()
+  #   name: Post Workflow Status To Slack
+  #   needs:
+  #     - publish-image
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Slack Workflow Notification
+  #       uses: Gamesight/slack-workflow-status@v1.0.1
+  #       with:
+  #         # Required Input
+  #         repo_token: ${{secrets.GITHUB_TOKEN}}
+  #         slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+  #         # Optional Input
+  #         channel: "#cohabi-api_dev"
