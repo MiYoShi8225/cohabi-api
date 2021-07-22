@@ -11,6 +11,10 @@ AUTH0_DOMAIN = 'dev-uql6wxih.jp.auth0.com'
 API_AUDIENCE = 'https://api-staging.cohabi.runemosuky.com'
 ALGORITHMS = ["RS256"]
 
+class name_check(Exception):
+    # TODO:もう少し処理内容を詰める.あと、クラス名が最高にイカしてる
+    """name確認のやる"""
+    pass
 
 class AuthResult:
     def __init__(self, error_code: str = "", error_detail: str = "", usersub: str = None) -> None:
@@ -81,10 +85,17 @@ def authorized_user(request: Request) -> AuthResult:
                 audience=API_AUDIENCE,
                 issuer="https://"+AUTH0_DOMAIN+"/"
             )
+
+            # TODO:ここで名前チェックして例外処理入れるのは?
+            if payload['sub'] == None:
+                raise name_check()
+
         except jwt.ExpiredSignatureError:
             return create_auth_error(code="token_expired", detail="token is expired")
         except jwt.JWTClaimsError:
             return create_auth_error(code="invalid_claims", detail="incorrect claims, please check the audience and issuer")
+        except name_check:
+            return create_auth_error(code="invalid_header", detail="Unable to parse authentication, token.")
         except Exception:
             return create_auth_error(code="invalid_header", detail="Unable to parse authentication, token.")
         return AuthResult(usersub=payload['sub'])

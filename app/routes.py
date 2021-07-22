@@ -14,8 +14,8 @@ router = APIRouter()
 @router.get("/helloworld")
 async def get_helloworld(auth: AuthResult = Depends(authorized_user)):
     # TODO: 毎回これを書くのが面倒なのでAuth Filter的な実装にしたい
-    if auth.user == None:
-        return ApiResult(result=ApiError(error_code=auth.error_code, error_messages=[auth.error_detail]))
+    # if auth.user == None:
+    #     return ApiResult(result=ApiError(error_code=auth.error_code, error_messages=[auth.error_detail]))
 
     user_names = helloworld_service.get()
 
@@ -36,8 +36,8 @@ class postUser(BaseModel):
 
 @router.post("/helloworld")
 async def create_helloworld(body: postUser, auth: AuthResult = Depends(authorized_user)):
-    if auth.user == None:
-        return ApiResult(result=ApiError(error_code=auth.error_code, error_messages=[auth.error_detail]))
+    # if auth.user == None:
+    #     return ApiResult(result=ApiError(error_code=auth.error_code, error_messages=[auth.error_detail]))
 
     helloworld_service.create(body.name)
 
