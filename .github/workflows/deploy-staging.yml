@@ -79,18 +79,18 @@ jobs:
           cluster: cohabi-stg-cluster
           wait-for-service-stability: true
 
-  # slack-workflow-status:
-  #   if: always()
-  #   name: Post Workflow Status To Slack
-  #   needs:
-  #     - publish-image
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Slack Workflow Notification
-  #       uses: Gamesight/slack-workflow-status@v1.0.1
-  #       with:
-  #         # Required Input
-  #         repo_token: ${{secrets.GITHUB_TOKEN}}
-  #         slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
-  #         # Optional Input
-  #         channel: "#cohabi-api_dev"
+  slack-workflow-status:
+    if: always()
+    name: Post Workflow Status To Slack
+    needs:
+      - publish-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Workflow Notification
+        uses: Gamesight/slack-workflow-status@v1.0.1
+        with:
+          # Required Input
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+          # Optional Input
+          channel: "#cohabi-api_dev"
