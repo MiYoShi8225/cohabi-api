@@ -57,9 +57,15 @@ jobs:
       - name: "Push image to Amazon ECR"
         run: docker push ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
 
+  deploy-to-ecs:
+    runs-on: ubuntu-latest
+    needs:
+      - publish-image
+    steps:
+      - uses: actions/checkout@v2
+
       - name: "Fill task definition"
         run: |
-          cat docker/task-definition-stg.tmpl
           cat docker/task-definition-stg.tmpl |
           sed -e "s%{OVERWRITE_TASK_EXECUTION_ROLE_ARN}%${{ secrets.STG_TASK_EXECUTION_ROLE_ARN }}%g" > docker/task-definition-stg.json
 
@@ -69,7 +75,7 @@ jobs:
         with:
           task-definition: docker/task-definition-stg.json
           container-name: cohabi-stg-container
-          image: ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
+          image: ${{ env.ECR_REGISTRY }}/${{ needs.publish-images.outputs.docker-image-tag }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -84,6 +90,7 @@ jobs:
     name: Post Workflow Status To Slack
     needs:
       - publish-image
+      - deploy-to-ecs
     runs-on: ubuntu-latest
     steps:
       - name: Slack Workflow Notification
