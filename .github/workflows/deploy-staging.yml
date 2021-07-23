@@ -75,7 +75,7 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: cohabi-service
-          cluster: default
+          cluster: cohabi-stg
           wait-for-service-stability: true
 
   # slack-workflow-status:
