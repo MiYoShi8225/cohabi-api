@@ -1,5 +1,4 @@
 
-class User:
+class Group:
     id: str
     name: str
-    mail: str
