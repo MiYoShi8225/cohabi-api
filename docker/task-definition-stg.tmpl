@@ -1,16 +1,16 @@
 {
     "executionRoleArn": "{OVERWRITE_TASK_EXECUTION_ROLE_ARN}",
-    "logConfiguration": {
-        "logDriver": "awslogs",
-        "secretOptions": null,
-        "options": {
-            "awslogs-group": "/ecs/cohabi-stg-task-def",
-            "awslogs-region": "ap-northeast-1",
-            "awslogs-stream-prefix": "ecs"
-        }
-    },
     "containerDefinitions": [
         {
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "secretOptions": null,
+                "options": {
+                    "awslogs-group": "/ecs/cohabi-stg-task-def",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
             "portMappings": [
                 {
                     "hostPort": 8000,
