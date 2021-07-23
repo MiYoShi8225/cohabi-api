@@ -59,14 +59,14 @@ jobs:
 
       - name: "Fill task definition"
         run: |
-          cat deploy/task-definition-stg.json |
+          cat docker/task-definition-stg.json |
           sed -e "s%{OVERWRITE_TASK_EXECUTION_ROLE_ARN}%${{ secrets.STG_TASK_EXECUTION_ROLE_ARN }}%g" > task-definition-stg.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: deploy/task-definition-stg.json
+          task-definition: docker/task-definition-stg.json
           container-name: cohabi-stg
           image: ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
 
