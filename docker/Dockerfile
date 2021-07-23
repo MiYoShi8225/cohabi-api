@@ -15,3 +15,5 @@ RUN set -eux \
     && apk del build-base
 
 COPY . .
+EXPOSE 8000
+CMD [ "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000" ]
