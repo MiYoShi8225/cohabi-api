@@ -10,7 +10,7 @@
                 }
             ],
             "image": "hoge",
-            "name": "cohabi-stg"
+            "name": "cohabi-stg-container"
         }
     ],
     "placementConstraints": [],
@@ -21,7 +21,5 @@
         "FARGATE"
     ],
     "networkMode": "awsvpc",
-    "cpu": "256",
-    "revision": 1,
-    "status": "ACTIVE"
+    "cpu": "256"
 }
