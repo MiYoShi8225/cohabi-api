@@ -67,7 +67,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: docker/task-definition-stg.json
-          container-name: cohabi-stg
+          container-name: cohabi-stg-container
           image: ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
 
       - name: Deploy Amazon ECS task definition
