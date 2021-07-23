@@ -57,13 +57,10 @@ jobs:
       - name: "Push image to Amazon ECR"
         run: docker push ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
 
-      - name: "Fill task definition"
-        run: |
-          cat docker/task-definition-stg.json |
-          sed -e "s%{OVERWRITE_TASK_EXECUTION_ROLE_ARN}%${{ secrets.STG_TASK_EXECUTION_ROLE_ARN }}%g" > docker/task-definition-stg.json
-
-      - name: "aaa"
-        run: cat docker/task-definition-stg.json
+      #      - name: "Fill task definition"
+      #        run: |
+      #          cat docker/task-definition-stg.json |
+      #          sed -e "s%{OVERWRITE_TASK_EXECUTION_ROLE_ARN}%${{ secrets.STG_TASK_EXECUTION_ROLE_ARN }}%g" > docker/task-definition-stg.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def

@@ -1,5 +1,4 @@
 {
-    "executionRoleArn": "{OVERWRITE_TASK_EXECUTION_ROLE_ARN}",
     "containerDefinitions": [
         {
             "portMappings": [
