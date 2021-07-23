@@ -16,7 +16,7 @@
     "placementConstraints": [],
     "memory": "512",
     "taskRoleArn": null,
-    "family": "cohabi-stg",
+    "family": "cohabi-stg-task-def",
     "requiresCompatibilities": [
         "FARGATE"
     ],

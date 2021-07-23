@@ -74,8 +74,8 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: cohabi-service
-          cluster: cohabi-stg
+          service: cohabi-stg-service
+          cluster: cohabi-stg-cluster
           wait-for-service-stability: true
 
   # slack-workflow-status:
