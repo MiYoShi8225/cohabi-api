@@ -5,7 +5,7 @@ name: Deploy Staging
 on:
   push:
     branches:
-      - deploy-to-ecs
+      - main
 
 env:
   ENV_NAME: staging
