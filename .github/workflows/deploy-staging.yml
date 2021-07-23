@@ -54,29 +54,29 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/Dockerfile .
           echo "::set-output name=ecr-push-tag::$ECR_REPOSITORY:$IMAGE_TAG"
 
-    - name: "Push image to Amazon ECR"
-      run: docker push ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
+      - name: "Push image to Amazon ECR"
+        run: docker push ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
 
-    - name: "Fill task definition"
-      run: |
+      - name: "Fill task definition"
+        run: |
           cat deploy/task-definition-stg.json |
           sed -e "s%{OVERWRITE_TASK_EXECUTION_ROLE_ARN}%${{ secrets.STG_TASK_EXECUTION_ROLE_ARN }}%g" > task-definition-stg.json
 
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: deploy/task-definition-stg.json
-        container-name: cohabi-stg
-        image: ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: deploy/task-definition-stg.json
+          container-name: cohabi-stg
+          image: ${{ env.ECR_REGISTRY }}/${{ steps.build-image.outputs.ecr-push-tag }}
 
-    - name: Deploy Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: cohabi-service
-        cluster: default
-        wait-for-service-stability: true
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: cohabi-service
+          cluster: default
+          wait-for-service-stability: true
 
   # slack-workflow-status:
   #   if: always()
